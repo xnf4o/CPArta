@@ -1,0 +1,105 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: User API
+paths:
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        404:
+          description: No users found
+    post:
+      summary: Create a new user
+      parameters:
+        - name: User
+          in: body
+          description: User data
+          required: true
+          schema:
+            $ref: '#/definitions/CreateUserRequest'
+      responses:
+        201:
+          description: User created successfully
+        400:
+          description: Invalid request data
+  /users/{id}:
+    get:
+      summary: Get a user by ID
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: User not found
+    post:
+      summary: Update a user by ID
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          type: integer
+        - name: User
+          in: body
+          description: User data
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateUserRequest'
+      responses:
+        200:
+          description: User updated successfully
+        404:
+          description: User not found
+    delete:
+      summary: Delete a user by ID
+      parameters:
+        - name: id
+          in: path
+          description: User ID
+          required: true
+          type: integer
+      responses:
+        200:
+          description: User deleted successfully
+        404:
+          description: User not found
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+  CreateUserRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  UpdateUserRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
